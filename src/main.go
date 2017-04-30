@@ -28,8 +28,6 @@ type DateInfo struct {
 }
 
 func main() {
-	n := 100 // oldest date that I found to work for simulating based on historical data
-	// n := 2425 // oldest date that I found to work for simulating based on historical data
 	var large, small int
 	var funds float64
 
@@ -44,12 +42,15 @@ func main() {
 
 	numBitcoins := 0.0 // always start with zero bitcoins
 
-	dates := []DateInfo{}
-	greedy := Algorithm{"Greedy", funds, numBitcoins, 0.0}
-	random := Algorithm{"Random", funds, numBitcoins, 0.0}
-
 	// make sure that the simulated date is larger than the large MA size
 	for trial := 1; trial <= 30; trial++ {
+
+		dates := []DateInfo{}
+		greedy := Algorithm{"Greedy", funds, numBitcoins, 0.0}
+		random := Algorithm{"Random", funds, numBitcoins, 0.0}
+		n := 30 // oldest date that I found to work for simulating based on historical data
+		// n := 2425 // oldest date that I found to work for simulating based on historical data
+
 		for n > 0 {
 
 			// get current simulated date
@@ -125,7 +126,7 @@ func writeToFile(file string, dates []DateInfo) {
 	defer f.Close()
 
 	w := csv.NewWriter(f)
-	w.Write([]string{"Trial", "Initial_Funds", "Small", "Large", "Date", "Small_SMA", "Large_SMA", "A1_Name", "A1_Funds", "A1_Bitcoins", "A1_Worth", "A2_Name", "A2_Funds", "A2_Bitcoins", "A2_Worth"})
+	// w.Write([]string{"Trial", "Initial_Funds", "Small", "Large", "Date", "Small_SMA", "Large_SMA", "A1_Name", "A1_Funds", "A1_Bitcoins", "A1_Worth", "A2_Name", "A2_Funds", "A2_Bitcoins", "A2_Worth"})
 	for _, d := range dates {
 
 		trial := strconv.Itoa(d.Trial)
